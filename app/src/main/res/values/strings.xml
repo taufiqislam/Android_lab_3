@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">lab3</string>
+    <string name="enter_your_name">Enter your Name</string>
+    <string name="send_message">Send Message</string>
+</resources>
