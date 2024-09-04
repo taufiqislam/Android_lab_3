@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +12,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
 
+public class MainActivity extends AppCompatActivity {
+    private DeviceExpert expert = new DeviceExpert();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,10 +25,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSendMessage(View view) {
-        EditText messageView =  findViewById(R.id.message);
-        String messageText = messageView.getText().toString();
+
+        Spinner messageView =  findViewById(R.id.deviceSpinner);
+        String messageText = messageView.getSelectedItem().toString();
+        List<String> menuList = expert.getDevices(messageText);
+        StringBuilder devicesFormatted = new StringBuilder();
+        for(String item : menuList)
+        {
+            devicesFormatted.append(item).append('\n');
+        }
         Intent intent = new Intent(this, ReceiveMessageActivity.class);
-        intent.putExtra(ReceiveMessageActivity.EXTRA_MESSAGE, messageText);
+        intent.putExtra(ReceiveMessageActivity.EXTRA_MESSAGE, devicesFormatted.toString());
         startActivity(intent);
     }
 }
